@@ -1,4 +1,5 @@
 const Database = require('better-sqlite3');
+const fs = require('fs');
 const path = require('path');
 
 const DB_PATH = process.env.STUDYFLOW_DB || path.join(__dirname, '..', 'data', 'studyflow.db');
@@ -6,6 +7,7 @@ const DB_PATH = process.env.STUDYFLOW_DB || path.join(__dirname, '..', 'data', '
 let db;
 
 function init() {
+  fs.mkdirSync(path.dirname(DB_PATH), { recursive: true });
   db = new Database(DB_PATH);
   db.pragma('journal_mode = WAL');
   db.pragma('foreign_keys = ON');
